@@ -11,9 +11,12 @@ import IconButton from "@material-ui/core/IconButton";
 import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 
+import profileImg from '../../assets/images/profile.jpg';
+import Logo from '../Logo/Logo';
+
 const useStyles = makeStyles(theme => ({
   header: {
-    backgroundColor: "#2B2C3B"
+    backgroundColor: theme.palette.primary.main
   },
   menuButton: {
     marginRight: theme.spacing(2)
@@ -55,7 +58,10 @@ const useStyles = makeStyles(theme => ({
     borderLeft: "1px solid #393A48"
   },
   loginButton: {
+    height: "50px",
+    width: "100px",
     textTransform: "none",
+    borderRadius: "25px",
     fontSize: "20px",
     fontWeight: "400"
   },
@@ -144,7 +150,7 @@ const UserHeader = () => {
       </Button>
       <Avatar
         alt="Remy Sharp"
-        src="https://material-ui.com/static/images/avatar/1.jpg"
+        src={profileImg}
         className={classes.avatar}
       />
     </Grid>
@@ -165,6 +171,9 @@ const Header = () => {
         >
           <MenuIcon />
         </IconButton>
+        <Link to="/" component={NavLink} underline="none">
+          <Logo />
+        </Link>
         <Grid className={classes.nav}>
           {navItems.map(item => (
             <Link

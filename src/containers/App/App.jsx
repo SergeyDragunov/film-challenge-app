@@ -6,23 +6,26 @@ import Header from '../../components/Header/Header';
 import Drawer from '../../components/Drawer/Drawer';
 import Movies from '../Movies/Movies';
 
-const useStyles = makeStyles({
+import LoginModal from '../../components/LoginModal/LoginModal.jsx';
+
+const useStyles = makeStyles(theme => ({
   app: {
   	minHeight: "100vh",
-  	backgroundColor: "#3E3F52"
+  	backgroundColor: theme.palette.primary.light
   }
-});
+}));
 
 export default () => {
 	const classes = useStyles();
 
-	return (
+	return (	
 		<div className={classes.app}>
 			<Header />
 			<Drawer />
 			<Container>
 				<Route path="/" exact component={Movies} />
 			</Container>
+			<LoginModal />
 		</div>
 	)
 }
