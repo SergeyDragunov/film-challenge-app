@@ -52,7 +52,7 @@ const Modal = props => {
       }}
       {...props}
     >
-      <IconButton className={classes.clearButton} aria-label="Delete" onClick={handleClose}>
+      <IconButton className={classes.clearButton} aria-label="Close Modal" onClick={handleClose}>
         <ClearIcon />
       </IconButton>
       <DialogContent className={classes.content}>

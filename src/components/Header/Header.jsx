@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import { NavLink } from "react-router-dom";
+// import PropTypes from 'prop-types';
 
 // Material UI
 
@@ -17,6 +16,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 
 import profileImg from '../../assets/images/profile.jpg';
 import Logo from '../Logo/Logo';
+import NavLink from '../NavLink/NavLink';
 
 const useStyles = makeStyles(theme => ({
   header: {
@@ -113,23 +113,6 @@ const navItems = [
   }
 ];
 
-const MyLink = props => (
-  <NavLink
-    exact
-    to={props.to}
-    className={props.className}
-    activeClassName="selected"
-  >
-    {props.children}
-  </NavLink>
-);
-
-MyLink.propTypes = {
-  to: PropTypes.string,
-  className: PropTypes.string,
-  children: PropTypes.string
-}
-
 const AuthControls = () => {
   const classes = useStyles();
 
@@ -188,7 +171,7 @@ const Header = () => {
           {navItems.map(item => (
             <Link
               className={classes.link}
-              component={MyLink}
+              component={NavLink}
               to={item.href}
               key={item.title}
               underline="none"
