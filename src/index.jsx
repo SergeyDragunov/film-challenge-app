@@ -11,6 +11,10 @@ import App from './containers/App/App'
 const theme = createMuiTheme({
   palette: {
     primary: { 
+    	main: "#2E74C4",
+      contrastText: '#fff'
+    },
+    secondary: {
     	light: "#3E3F52",
     	main: "#2B2C3B"
     }

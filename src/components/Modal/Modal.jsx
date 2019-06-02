@@ -1,18 +1,26 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import IconButton from '@material-ui/core/IconButton';
+import ClearIcon from '@material-ui/icons/Clear';
 
 const useStyles = makeStyles(theme => ({
   paper: {
-    position: 'absolute',
-    top: "30%",
-    left: "calc(50% - 200px)",
-    width: 400,
-    backgroundColor: theme.palette.primary.main,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(4),
-    outline: 'none',
+    position: 'relative',
+    maxWidth: 687,
+    borderRadius: 0,
+    backgroundColor: theme.palette.secondary.main,
   },
+  clearButton: {
+    position: "absolute",
+    top: 32,
+    right: 32,
+    color: "#fff"
+  },
+  content: {
+    padding: "75px 95px 134px"
+  }
 }));
 
 export default props => {
@@ -28,15 +36,24 @@ export default props => {
   const classes = useStyles();
 
   return (
-    <Modal
+    <Dialog  
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
       open={open}
+      scroll="body"
       onClose={handleClose}
+      classes={{
+        paper: classes.paper,
+        dialogContent: classes.dialogContent
+      }}
+      {...props}
     >
-      <div className={classes.paper}>
+      <IconButton className={classes.clearButton} aria-label="Delete" onClick={handleClose}>
+        <ClearIcon />
+      </IconButton>
+      <DialogContent className={classes.content}>
         {props.children}
-      </div>
-    </Modal>
+      </DialogContent>
+    </Dialog>
   );
 }

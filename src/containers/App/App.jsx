@@ -11,7 +11,7 @@ import LoginModal from '../../components/LoginModal/LoginModal.jsx';
 const useStyles = makeStyles(theme => ({
   app: {
   	minHeight: "100vh",
-  	backgroundColor: theme.palette.primary.light
+  	backgroundColor: theme.palette.secondary.light
   }
 }));
 

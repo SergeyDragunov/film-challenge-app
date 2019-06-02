@@ -16,7 +16,7 @@ import Logo from '../Logo/Logo';
 
 const useStyles = makeStyles(theme => ({
   header: {
-    backgroundColor: theme.palette.primary.main
+    backgroundColor: theme.palette.secondary.main
   },
   menuButton: {
     marginRight: theme.spacing(2)
