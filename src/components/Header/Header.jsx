@@ -1,5 +1,9 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import { NavLink } from "react-router-dom";
+
+// Material UI
+
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
@@ -119,6 +123,12 @@ const MyLink = props => (
     {props.children}
   </NavLink>
 );
+
+MyLink.propTypes = {
+  to: PropTypes.string,
+  className: PropTypes.string,
+  children: PropTypes.string
+}
 
 const AuthControls = () => {
   const classes = useStyles();

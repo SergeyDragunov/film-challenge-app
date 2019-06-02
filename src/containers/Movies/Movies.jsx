@@ -3,7 +3,8 @@ import { withStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 
 import Movie from '../../components/Movie/Movie';
-import { Page, PageHeader } from '../../components/Page/Page'
+import Page from '../../components/Page/Page'
+import PageHeader from '../../components/PageHeader/PageHeader'
 
 const styles = {
 };

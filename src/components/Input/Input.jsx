@@ -1,4 +1,8 @@
 import React from "react";
+import PropTypes from 'prop-types';
+
+// Material UI
+
 import { makeStyles } from "@material-ui/core/styles";
 import FilledInput from "@material-ui/core/FilledInput";
 import FormControl from "@material-ui/core/FormControl";
@@ -27,7 +31,7 @@ const useStyles = makeStyles(theme => ({
 	focused: {}
 }));
 
-export default props => {
+const Input = props => {
 	const classes = useStyles();
 
 	return (
@@ -56,3 +60,11 @@ export default props => {
 		</FormControl>
 	);
 };
+
+Input.propTypes = {
+	id: PropTypes.string,
+	label: PropTypes.string,
+	type: PropTypes.string,
+}
+
+export default Input;

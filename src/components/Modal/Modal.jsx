@@ -1,4 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
+// Material UI
+
 import { makeStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -23,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default props => {
+const Modal = props => {
   const [open, setOpen] = React.useState(true);
 
   // const handleOpen = () => {
@@ -57,3 +61,9 @@ export default props => {
     </Dialog>
   );
 }
+
+Modal.propTypes  = {
+  children: PropTypes.node
+}
+
+export default Modal;
