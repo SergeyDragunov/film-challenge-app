@@ -6,7 +6,8 @@ import Header from '../../components/Header/Header';
 import Drawer from '../../components/Drawer/Drawer';
 import Movies from '../Movies/Movies';
 
-import LoginModal from '../../components/LoginModal/LoginModal.jsx';
+// import LoginModal from '../../components/LoginModal/LoginModal';
+import AddMovieModal from '../../components/AddMovieModal/AddMovieModal';
 
 const useStyles = makeStyles(theme => ({
   app: {
@@ -25,7 +26,7 @@ export default () => {
 			<Container>
 				<Route path="/" exact component={Movies} />
 			</Container>
-			<LoginModal />
+			<AddMovieModal />
 		</div>
 	)
 }

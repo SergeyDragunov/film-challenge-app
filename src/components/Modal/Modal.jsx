@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Modal = props => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   // const handleOpen = () => {
   //   setOpen(true);
