@@ -1,21 +1,23 @@
-import React from 'react';
+import React from "react";
 
 // Material UI
 
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+
+import MoreMenu from "../MoreMenu/MoreMenu";
 
 const useStyles = makeStyles(theme => ({
   card: {
     height: 223,
     width: 386,
-    overflow: 'visible',
-    position: 'relative',
-    marginTop: '72px',
+    overflow: "visible",
+    position: "relative",
+    marginTop: "72px",
     backgroundColor: theme.palette.secondary.main,
     color: theme.palette.secondary.contrastText,
     boxShadow: "0 2px 20px 0 #292B46"
@@ -29,17 +31,28 @@ const useStyles = makeStyles(theme => ({
     borderRadius: 2,
     boxShadow: "0 2px 15px 0 rgba(0,0,0,0.5)"
   },
+  cardContent: {
+    position: "relative",
+    paddingTop: 26,
+    paddingRight: 23
+  },
+  moreButton: {
+    position: "absolute",
+    top: 2,
+    right: 20,
+    padding: 3
+  },
   title: {
     fontSize: 24,
     marginBottom: 8
   },
   rating: {
-    position: 'relative',
+    position: "relative",
     marginTop: 5,
     color: "#64D899",
     fontSize: 12,
     "&:after": {
-      position: 'absolute',
+      position: "absolute",
       bottom: -2,
       left: "calc(50% - 4.75px)",
       content: "''",
@@ -52,11 +65,12 @@ const useStyles = makeStyles(theme => ({
   date: {
     color: "#BBB",
     fontSize: 12,
-    marginBottom: 16 
+    marginBottom: 16
   },
   text: {
     fontSize: 14.4,
     color: "#BBB",
+    lineHeight: 1.2
   }
 }));
 
@@ -77,12 +91,22 @@ const Movie = () => {
           />
         </Grid>
         <Grid item sm={6}>
-          <CardContent>
-            <Grid container alignItems="flex-start" justify="space-between" wrap="nowrap">
+          <CardContent className={classes.cardContent}>
+            {true && <MoreMenu classNameButton={classes.moreButton} />}
+            <Grid
+              container
+              alignItems="flex-start"
+              justify="space-between"
+              wrap="nowrap"
+            >
               <Typography className={classes.title} variant="h5" component="h2">
                 Alita: Battle angel
               </Typography>
-              <Typography className={classes.rating} variant="body2" component="span">
+              <Typography
+                className={classes.rating}
+                variant="body2"
+                component="span"
+              >
                 64%
               </Typography>
             </Grid>
@@ -90,13 +114,14 @@ const Movie = () => {
               February 14, 2019
             </Typography>
             <Typography className={classes.text} variant="body2" component="p">
-              When Alita awakens with no memory of who she is in a future world she does not recognize
+              When Alita awakens with no memory of who she is in a future world
+              she does not recognize
             </Typography>
           </CardContent>
         </Grid>
       </Grid>
     </Card>
   );
-}
+};
 
 export default Movie;
