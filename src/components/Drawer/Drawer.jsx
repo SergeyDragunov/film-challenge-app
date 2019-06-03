@@ -63,7 +63,7 @@ const navList = [
 
 const Link = React.forwardRef((props, ref) => <NavLink {...props} innerRef={ref} />);
 
-const ListItemLink = (props) => {
+const ListItemLink = props => {
   const { primary, to, icon } = props;
   const classes = useStyles();
 
@@ -103,7 +103,7 @@ const DrawerNav = () => {
 	const classes = useStyles();
 
 	return (
-		<Drawer open={true} classes={{paper: classes.paper}}>
+		<Drawer open={false} classes={{paper: classes.paper}}>
 			<IconButton className={classes.clearButton} aria-label="Close Drawer">
         <ClearIcon />
       </IconButton>
