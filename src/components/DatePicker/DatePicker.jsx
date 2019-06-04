@@ -47,6 +47,7 @@ const Calendar = ({ classes, ...rest }) => {
         inputVariant="filled"
         clearable
         value={selectedDate}
+        invalidDateMessage="Invalid Date Format - mm/dd/yyyy"
         InputLabelProps={{
           classes: {
             root: classes.label,
