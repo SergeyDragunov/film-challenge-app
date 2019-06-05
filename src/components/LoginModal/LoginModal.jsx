@@ -48,7 +48,7 @@ export default () => {
 	const classes = useStyles();
 
 	return (
-		<Modal className={classes.loginModal} contentclassname={classes.loginContent}>
+		<Modal className={classes.loginModal}>
 			<Grid className={classes.logoWrapper} container justify="center">
 				<Grid item>
 					<Logo />

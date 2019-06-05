@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 // Material UI
 
@@ -29,13 +30,10 @@ const useStyles = makeStyles(theme => ({
 
 const Modal = props => {
   const [open, setOpen] = React.useState(true);
-
-  // const handleOpen = () => {
-  //   setOpen(true);
-  // };
-
+  
   const handleClose = () => {
     setOpen(false);
+    props.history.goBack();
   };
   const classes = useStyles();
 
@@ -50,7 +48,6 @@ const Modal = props => {
         paper: classes.paper,
         dialogContent: classes.dialogContent
       }}
-      {...props}
     >
       <IconButton className={classes.clearButton} aria-label="Close Modal" onClick={handleClose}>
         <ClearIcon />
@@ -66,4 +63,4 @@ Modal.propTypes  = {
   children: PropTypes.node
 }
 
-export default Modal;
+export default withRouter(Modal);

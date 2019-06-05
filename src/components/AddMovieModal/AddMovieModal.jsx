@@ -5,11 +5,9 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
 import Button from "@material-ui/core/Button";
 
 import Modal from "../Modal/Modal";
-import Logo from "../Logo/Logo";
 import Input from "../Input/Input";
 import DatePicker from "../DatePicker/DatePicker";
 import UploadButton from '../UploadButton/UploadButton';
@@ -30,8 +28,6 @@ const useStyles = makeStyles(theme => ({
 		fontWeight: 400
 	}
 }));
-
-const fakeUrl = "javascript:;";
 
 export default () => {
 	const classes = useStyles();

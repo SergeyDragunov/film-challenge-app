@@ -1,4 +1,5 @@
 import React from "react";
+import { Link as RouterLink } from 'react-router-dom';
 // import PropTypes from 'prop-types';
 
 // Material UI
@@ -40,6 +41,10 @@ const useStyles = makeStyles(theme => ({
     color: "#B5B5B5",
     fontWeight: "400",
     fontSize: "20px",
+    transition: theme.transitions.create("color"),
+    "&:hover": {
+      color: "#fff"
+    },
     "&::after": {
       content: "''",
       position: "absolute",
@@ -87,14 +92,17 @@ const useStyles = makeStyles(theme => ({
     color: "#ffffff",
     textTransform: "none",
     fontWeight: "400",
+    transition: theme.transitions.create("backgroundColor"),
     "&:hover": {
-      backgroundColor: "#2E74C4"
+      backgroundColor: "#245ea0"
     }
+  },
+  avatarLink: {
+    marginLeft: "70px"
   },
   avatar: {
     height: "59px",
     width: '59px',
-    marginLeft: "70px"
   }
 }));
 
@@ -117,14 +125,24 @@ const AuthControls = () => {
   const classes = useStyles();
 
   return (
-    <div>
-      <Button color="inherit" className={classes.loginButton}>
-        Login
-      </Button>
+    <Grid container alignItems="center">
+      <Grid item>
+        <Link
+          color="inherit"
+          className={classes.loginButton}
+          component={RouterLink}
+          to={{
+            pathname: `/login`,
+            state: { modal: true }
+          }}
+        >
+          Login
+        </Link>
+      </Grid>
       <Button variant="contained" className={classes.signUpButton}>
         Sign up
       </Button>
-    </div>
+    </Grid>
   )
 }
 
@@ -136,16 +154,23 @@ const UserHeader = () => {
       <Button
         variant="contained"
         color="primary"
+        component={RouterLink}
         className={classes.addMovieButton}
+        to={{
+          pathname: `/add-movie`,
+          state: { modal: true }
+        }}
       >
         <AddIcon />
         Add movie
       </Button>
-      <Avatar
-        alt="Remy Sharp"
-        src={profileImg}
-        className={classes.avatar}
-      />
+      <RouterLink to='/profile' className={classes.avatarLink}>
+        <Avatar
+          alt="Remy Sharp"
+          src={profileImg}
+          className={classes.avatar}
+        />
+      </RouterLink>
     </Grid>
   )
 }
@@ -181,7 +206,7 @@ const Header = () => {
           ))}
         </Grid>
         <div className={classes.headerSide}>
-          {false ? <UserHeader/> : <AuthControls />}
+          {true ? <UserHeader/> : <AuthControls />}
         </div>
       </Toolbar>
     </AppBar>
