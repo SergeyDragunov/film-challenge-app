@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 // Material UI
 
@@ -9,7 +9,6 @@ import MaterialSelect from "@material-ui/core/Select";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-
 
 const useStyles = makeStyles(theme => ({
 	formControl: {
@@ -29,64 +28,64 @@ const useStyles = makeStyles(theme => ({
 		backgroundColor: theme.palette.secondary.light,
 		borderRadius: 0,
 		color: "#fff",
-		fontFamily: "inherit",
+		fontFamily: "inherit"
 	},
 	textarea: {
 		height: 124,
 		backgroundColor: theme.palette.secondary.light,
 		borderRadius: 0,
 		color: "#fff",
-		fontFamily: "inherit",
+		fontFamily: "inherit"
 	},
 	arrowIcon: {
 		display: "none"
 	}
 }));
 
-
 const FilledInput = props => {
 	return (
 		<MaterialFilledInput
 			{...props}
+			value={props.value}
 			name={props.id}
 			id={props.id}
 			className={props.className}
 			type={props.type}
 			disableUnderline={true}
 		/>
-	)
-}
+	);
+};
 
 FilledInput.propTypes = {
 	className: PropTypes.string
-}
+};
 
-const Select= ({ id, type }) => {
+const Select = ({ id, type }) => {
 	const classes = useStyles();
-	const [value, setValues] = React.useState('');
+	const [value, setValues] = React.useState("");
 
-  function handleChange(e) {
-    setValues(e.target.value);
-  }
+	function handleChange(e) {
+		setValues(e.target.value);
+	}
 
 	return (
 		<MaterialSelect
-      value={value}
-      classes={{
-      	icon: classes.arrowIcon
-      }}
-      onChange={handleChange}
-      input={<FilledInput id={id} className={classes.input} />}
-    >
-      <MenuItem value="">
-        <em>None</em>
-      </MenuItem>
-      <MenuItem value={10}>Ten</MenuItem>
-      <MenuItem value={20}>Twenty</MenuItem>
-      <MenuItem value={30}>Thirty</MenuItem>
-    </MaterialSelect>
-	)
-}
+			value={value}
+			classes={{
+				icon: classes.arrowIcon
+			}}
+			onChange={handleChange}
+			input={<FilledInput id={id} className={classes.input} />}
+		>
+			<MenuItem value="">
+				<em>None</em>
+			</MenuItem>
+			<MenuItem value={10}>Ten</MenuItem>
+			<MenuItem value={20}>Twenty</MenuItem>
+			<MenuItem value={30}>Thirty</MenuItem>
+		</MaterialSelect>
+	);
+};
 
 const FormControlInput = props => {
 	const classes = useStyles();
@@ -107,12 +106,25 @@ const FormControlInput = props => {
 				{props.label}
 			</InputLabel>
 			{
-				props.type === 'text' || props.type === 'password' ?
-				<FilledInput id={props.id} type={props.type} className={classes.input} /> :
+				props.type === "text" || props.type === "password" ?
+				<FilledInput
+					id={props.id}
+					type={props.type}
+					value={props.value}
+					className={classes.input}
+					onChange={props.onChange}
+				/> : 
 				props.type === "select" ?
-				<Select id={props.id} /> :
-				props.type === 'textarea' ?
-				<FilledInput id={props.id} type={props.type} rows={4} className={classes.textarea} multiline /> :
+				<Select id={props.id} /> : 
+				props.type === "textarea" ? 
+				<FilledInput
+					id={props.id}
+					type={props.type}
+					rows={4}
+					value={props.value}
+					className={classes.textarea}
+					multiline
+				/> : 
 				null
 			}
 		</FormControl>
@@ -123,6 +135,8 @@ FormControlInput.propTypes = {
 	id: PropTypes.string,
 	label: PropTypes.string,
 	type: PropTypes.string,
-}
+	value: PropTypes.string,
+	onChange: PropTypes.func
+};
 
 export default FormControlInput;

@@ -1,4 +1,7 @@
-import React from 'react';
+import React from "react";
+import { Redirect } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 // Material UI
 
@@ -6,11 +9,13 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
-import Button from "@material-ui/core/Button";
 
-import Modal from '../Modal/Modal';
-import Logo from '../Logo/Logo';
-import Input from '../Input/Input';
+import Modal from "../Modal/Modal";
+import Logo from "../Logo/Logo";
+import Input from "../Input/Input";
+import ProgressButton from '../ProgressButton/ProgressButton';
+
+import { login } from "../../actions/user";
 
 const useStyles = makeStyles(theme => ({
 	loginModal: {
@@ -22,8 +27,8 @@ const useStyles = makeStyles(theme => ({
 	button: {
 		height: 60,
 		borderRadius: 0,
-		textTransform: 'none',
-		fontFamily: 'inherit',
+		textTransform: "none",
+		fontFamily: "inherit",
 		fontSize: "20px"
 	},
 	loginInfo: {
@@ -32,7 +37,7 @@ const useStyles = makeStyles(theme => ({
 	},
 	loginText: {
 		color: "#AEAEAE",
-		fontSize: 'inherit'
+		fontSize: "inherit"
 	},
 	signUplink: {
 		marginLeft: 10
@@ -42,28 +47,94 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-const fakeUrl = 'javascript:;';
+const fakeUrl = "javascript:;";
 
-export default () => {
+const LoginModal = ({ login, user, history, location }) => {
 	const classes = useStyles();
+	const { loggingIn, loggedIn, error } = user.settings;
+	const [loginValue, setValue] = React.useState({ username: "", password: "" });
+	const { from: fromPath } = location.state || { from: { pathname: "/" } };
+
+	if (loggedIn && location.state && !location.state.from) {
+    setTimeout(() => history.goBack(), 1000)
+  } else if (fromPath && loggedIn) {
+  	return <Redirect to={fromPath} />
+  }
+
+	const handleChange = e => {
+		setValue({
+			...loginValue,
+			[e.target.name]: e.target.value 
+		})
+	};
+
+	const handleSubmit = () => {
+		if (loginValue.username && loginValue.password) {
+			login(loginValue);
+		}
+	}
 
 	return (
 		<Modal className={classes.loginModal}>
-			<Grid className={classes.logoWrapper} container justify="center">
-				<Grid item>
-					<Logo />
+			<form action="">
+				<Grid className={classes.logoWrapper} container justify="center">
+					<Grid item>
+						<Logo />
+					</Grid>
 				</Grid>
-			</Grid>
-			<Input id="username" label="Username" type="text" />
-			<Input id="password" label="Password" type="password" />
-			<Button className={classes.button} variant="contained" color="primary" fullWidth>Login</Button>
-			<Grid container justify="space-between" className={classes.loginInfo}>
-				<Typography className={classes.loginText}>
-					Don't have account? 
-					<Link href={fakeUrl} className={classes.signUplink}>Sign up</Link>
-				</Typography>
-				<Link href={fakeUrl} className={classes.recoverLink}>Recover Password</Link>
-			</Grid>
+				<Input
+					id="username"
+					label="Username"
+					type="text"
+					value={loginValue.username}
+					onChange={handleChange}
+				/>
+				<Input
+					id="password"
+					label="Password"
+					type="password"
+					value={loginValue.password}
+					onChange={handleChange}
+				/>
+				<ProgressButton
+					className={classes.button}
+					loading={loggingIn}
+					success={loggedIn}
+					error={!!error}
+					onClick={handleSubmit}
+				>
+					Login
+				</ProgressButton>
+				<Grid container justify="space-between" className={classes.loginInfo}>
+					<Typography className={classes.loginText}>
+						Don't have account?
+						<Link href={fakeUrl} className={classes.signUplink}>
+							Sign up
+						</Link>
+					</Typography>
+					<Link href={fakeUrl} className={classes.recoverLink}>
+						Recover Password
+					</Link>
+				</Grid>
+			</form>
 		</Modal>
-	)
-}
+	);
+};
+
+LoginModal.propTypes = {
+	user: PropTypes.object.isRequired,
+	login: PropTypes.func.isRequired
+};
+
+const mapStateToProps = ({ user }) => ({
+	user: user
+});
+
+const mapDispatchToProps = {
+	login
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(LoginModal);

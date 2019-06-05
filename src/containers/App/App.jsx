@@ -48,6 +48,8 @@ class App extends Component {
 				<Container>
 					<Switch location={isModal ? this.previousLocation : location}>
 						<Route path="/" exact component={Movies} />
+
+						<Route path="/login" component={LoginModal} />
 					</Switch>
 					{isModal ? <Route path="/login" component={LoginModal} /> : null}
 					{isModal ? <Route path="/add-movie" component={AddMovieModal} /> : null}

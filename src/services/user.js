@@ -1,5 +1,7 @@
-import { API_URL } from '../constants.js';
-import authHeader from '../utils/auth-header.js';
+import { API } from '../constants.js';
+// import authHeader from '../utils/auth-header.js';
+
+const { API_URL } = API;
 
 const users = [{
   id: 1,
@@ -10,37 +12,76 @@ const users = [{
   lastName: 'Kennedy'
 }];
 
+/* Fake back-end */
+
 const pseudoFetch = (url, opts) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      if (url.match(/\/users\/\d+$/) && opts.method === 'PUT') {
-        if (opts.headers) {
-          // find user by id in users array
-          let urlParts = url.split('/');
-          let id = parseInt(urlParts[urlParts.length - 1]);
 
-          for (let i = 0; i < users.length; i++) {
-            if (users[i].id === id) {
-              users[i] = JSON.parse(opts.body);
-              break;
-            }
-          }
+      // authenticate
 
-          /* Only for development */
-          let matchedUsers = users.filter(user => user.id === id);
-          let user = matchedUsers.length ? matchedUsers[0] : null;
-          // respond 200 OK with updated user
-          resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(user))});
-        } else {
-          // return 401 not authorised if token is null or invalid
-          reject('Unauthorised');
+      if (url.endsWith('/login') && opts.method === 'POST') {
+        // get parameters from post request
+        let params = JSON.parse(opts.body);
+
+
+
+        // find if any user matches login credentials
+        let filteredUsers = users.filter(user => {
+          console.log(user.username, params.username, user.password, params.password)
+          return user.username === params.username && user.password === params.password;
+        });
+
+
+        if (filteredUsers.length) {
+          // if login details are valid return user details and fake jwt token
+          let user = filteredUsers[0];
+          let responseJson = {
+              id: user.id,
+              username: user.username,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              token: 'fake-jwt-token'
+          };
+        resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(responseJson)) });
+      } else {
+          // else return error
+          reject('Username or password is incorrect');
         }
+
+        return;
       }
+
+      // update user
+
+      // if (url.match(/\/users\/\d+$/) && opts.method === 'PUT') {
+      //   if (opts.headers) {
+      //     // find user by id in users array
+      //     let urlParts = url.split('/');
+      //     let id = parseInt(urlParts[urlParts.length - 1]);
+
+      //     for (let i = 0; i < users.length; i++) {
+      //       if (users[i].id === id) {
+      //         users[i] = JSON.parse(opts.body);
+      //         break;
+      //       }
+      //     }
+
+      //     /* Only for development */
+      //     let matchedUsers = users.filter(user => user.id === id);
+      //     let user = matchedUsers.length ? matchedUsers[0] : null;
+      //     // respond 200 OK with updated user
+      //     resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(user))});
+      //   } else {
+      //     // return 401 not authorised if token is null or invalid
+      //     reject('Unauthorised');
+      //   }
+      // }
     }, 500);
   });
 }
 
-const login = (username, password) => {
+const login = ({ username, password }) => {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
