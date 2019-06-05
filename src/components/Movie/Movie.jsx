@@ -117,10 +117,10 @@ const Movie = ({ movie, menu }) => {
                 {rating}
               </Typography>
             </Grid>
-            <Typography className={classes.date} variant="body2" component="p">
+            <Typography className={classes.date} variant="body2" component="div">
               {releaseDate}
             </Typography>
-            <Typography className={classes.text} variant="body2" component="p">
+            <Typography className={classes.text} variant="body2" component="div">
               <LinesEllipsis
                 title={overview}
                 text={overview}

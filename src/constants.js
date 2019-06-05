@@ -12,3 +12,17 @@ export const API = {
 	API_TOP_RATED,
 	POSTER_URL
 }
+
+/* Redux Actions Constants */
+
+// Movie
+
+const GET_MOVIES_REQUEST = 'GET_MOVIES_REQUEST'
+const GET_MOVIES_SUCCESS = 'GET_MOVIES_SUCCESS';
+const GET_MOVIES_FAILURE = 'GET_MOVIES_FAILURE';
+
+export const moviesConstants = {
+	GET_MOVIES_REQUEST,
+	GET_MOVIES_SUCCESS,
+	GET_MOVIES_FAILURE
+}

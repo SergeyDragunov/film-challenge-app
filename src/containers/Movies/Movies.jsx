@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 // Material UI
 
@@ -10,28 +11,18 @@ import Movie from '../../components/Movie/Movie';
 import Page from '../../components/Page/Page'
 import PageHeader from '../../components/PageHeader/PageHeader'
 
-import { API } from '../../constants';
-import { parseData } from '../../utils';
+import moviesActions from '../../actions/movies';
 
 const styles = {
 };
 
 class Movies extends Component {
-	state = {
-		movies: []
-	}
-
 	componentDidMount() {
-		fetch(API.API_TOP_RATED)
-			.then(res => res.json())
-			.then(data => 
-				this.setState({movies: parseData(data.results)})
-			);
+		this.props.getAll();
 	}
 
 	render() {
-		// const { classes } = this.props;
-		const { movies } = this.state;
+		const { movies } = this.props;
 
 		return (
 			<Page>
@@ -56,4 +47,14 @@ Movies.propTypes = {
 	classes: PropTypes.object
 }
 
-export default withStyles(styles)(Movies);
+Movies = withStyles(styles)(Movies);
+
+const mapStateToProps = ({ movies }) => ({
+	movies: movies.data
+})
+
+const mapDispatchToProps = {
+	getAll: moviesActions.getAll
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Movies);
