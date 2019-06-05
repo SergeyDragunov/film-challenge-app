@@ -59,9 +59,9 @@ const NotificationContent = props => {
 }
 
 const Notification = () => {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
-  function handleClose(event, reason) {
+  const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
@@ -73,6 +73,7 @@ const Notification = () => {
 
 	return (
 		<Snackbar
+      autoHideDuration={4000}
       anchorOrigin={{
         vertical: 'top',
         horizontal: 'right',

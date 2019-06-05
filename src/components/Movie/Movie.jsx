@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from 'prop-types';
+import LinesEllipsis from 'react-lines-ellipsis'
 
 // Material UI
 
@@ -74,8 +76,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Movie = () => {
+const Movie = ({ movie, menu }) => {
   const classes = useStyles();
+  const { title, poster, overview, releaseDate, rating } = movie;
 
   return (
     <Card className={classes.card}>
@@ -84,15 +87,14 @@ const Movie = () => {
           <CardMedia
             className={classes.cardMedia}
             component="img"
-            alt="Contemplative Reptile"
-            height="140"
-            image="https://material-ui.com/static/images/cards/contemplative-reptile.jpg"
-            title="Contemplative Reptile"
+            alt={title + " poster"}
+            image={poster}
+            title={title + " poster"}
           />
         </Grid>
         <Grid item sm={6}>
           <CardContent className={classes.cardContent}>
-            {true && <MoreMenu classNameButton={classes.moreButton} />}
+            {menu && <MoreMenu classNameButton={classes.moreButton} />}
             <Grid
               container
               alignItems="flex-start"
@@ -100,22 +102,31 @@ const Movie = () => {
               wrap="nowrap"
             >
               <Typography className={classes.title} variant="h5" component="h2">
-                Alita: Battle angel
+                <LinesEllipsis
+                  title={title}
+                  text={title}
+                  maxLine='2'
+                  basedOn='letters'
+                />
               </Typography>
               <Typography
                 className={classes.rating}
                 variant="body2"
                 component="span"
               >
-                64%
+                {rating}
               </Typography>
             </Grid>
             <Typography className={classes.date} variant="body2" component="p">
-              February 14, 2019
+              {releaseDate}
             </Typography>
             <Typography className={classes.text} variant="body2" component="p">
-              When Alita awakens with no memory of who she is in a future world
-              she does not recognize
+              <LinesEllipsis
+                title={overview}
+                text={overview}
+                maxLine='4'
+                basedOn='letters'
+              />
             </Typography>
           </CardContent>
         </Grid>
@@ -123,5 +134,16 @@ const Movie = () => {
     </Card>
   );
 };
+
+Movie.propTypes = {
+  movie: PropTypes.shape({
+    id: PropTypes.number,
+    poster: PropTypes.string,
+    title: PropTypes.string,
+    overview: PropTypes.string,
+    releaseDate: PropTypes.string,
+    rating: PropTypes.string
+  }).isRequired
+}
 
 export default Movie;
