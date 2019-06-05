@@ -1,5 +1,6 @@
 import React from "react";
 import { Link as RouterLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 // import PropTypes from 'prop-types';
 
 // Material UI
@@ -175,8 +176,9 @@ const UserHeader = () => {
   )
 }
 
-const Header = () => {
+const Header = ({ user }) => {
   const classes = useStyles();
+  const { loggedIn } = user.settings;
 
   return (
     <AppBar position="static" className={classes.header}>
@@ -206,11 +208,15 @@ const Header = () => {
           ))}
         </Grid>
         <div className={classes.headerSide}>
-          {true ? <UserHeader/> : <AuthControls />}
+          {loggedIn ? <UserHeader/> : <AuthControls />}
         </div>
       </Toolbar>
     </AppBar>
   );
 };
 
-export default Header;
+const mapStateToProps = ({ user }) => ({
+  user
+});
+
+export default connect(mapStateToProps)(Header);

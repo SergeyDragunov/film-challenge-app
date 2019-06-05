@@ -1,6 +1,6 @@
 import DateFnsUtils from "@date-io/date-fns";
 
-import { API } from './constants';
+import { API } from '../constants';
 
 const dateFns = new DateFnsUtils();
 

@@ -1,5 +1,5 @@
 import { moviesConstants, API } from '../constants';
-import { parseData } from '../utils';
+import { parseData } from '../utils/utils';
 
 /* Get All Movies */
 
