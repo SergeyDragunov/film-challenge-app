@@ -60,29 +60,23 @@ FilledInput.propTypes = {
 	className: PropTypes.string
 };
 
-const Select = ({ id, type }) => {
+const Select = ({ id, type, ...other }) => {
 	const classes = useStyles();
-	const [value, setValues] = React.useState("");
-
-	function handleChange(e) {
-		setValues(e.target.value);
-	}
 
 	return (
 		<MaterialSelect
-			value={value}
 			classes={{
 				icon: classes.arrowIcon
 			}}
-			onChange={handleChange}
 			input={<FilledInput id={id} className={classes.input} />}
+			{...other}
 		>
 			<MenuItem value="">
 				<em>None</em>
 			</MenuItem>
-			<MenuItem value={10}>Ten</MenuItem>
-			<MenuItem value={20}>Twenty</MenuItem>
-			<MenuItem value={30}>Thirty</MenuItem>
+			<MenuItem value={'Tom'}>Tom</MenuItem>
+			<MenuItem value={'Bob'}>Bob</MenuItem>
+			<MenuItem value={'John'}>John</MenuItem>
 		</MaterialSelect>
 	);
 };
@@ -115,7 +109,7 @@ const FormControlInput = props => {
 					onChange={props.onChange}
 				/> : 
 				props.type === "select" ?
-				<Select id={props.id} /> : 
+				<Select id={props.id} {...props} /> : 
 				props.type === "textarea" ? 
 				<FilledInput
 					id={props.id}
@@ -123,6 +117,7 @@ const FormControlInput = props => {
 					rows={4}
 					value={props.value}
 					className={classes.textarea}
+					onChange={props.onChange}
 					multiline
 				/> : 
 				null
@@ -139,4 +134,4 @@ FormControlInput.propTypes = {
 	onChange: PropTypes.func
 };
 
-export default FormControlInput;
+export default React.memo(FormControlInput);

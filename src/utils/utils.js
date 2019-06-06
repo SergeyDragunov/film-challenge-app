@@ -2,7 +2,7 @@ import DateFnsUtils from "@date-io/date-fns";
 
 import { API } from '../constants';
 
-const dateFns = new DateFnsUtils();
+export const dateFns = new DateFnsUtils();
 
 // Parse API data
 

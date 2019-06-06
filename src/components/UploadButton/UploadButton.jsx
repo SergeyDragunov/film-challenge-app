@@ -21,18 +21,42 @@ const useStyles = makeStyles(theme => ({
 	},
 	uploadButtonLabel: {
 		color: "#888",
+		width: '90%',
 		justifyContent: "space-between",
 		textTransform: 'none',
     fontWeight: 400,
-		fontSize: 20
+		fontSize: 20,
+	},
+	truncate: {
+		width: '70%',
+		whiteSpace: 'nowrap',
+		textOverflow: 'ellipsis',
+		overflow: 'hidden'
+	},
+	uploaded: {
+		color: '#fff'
 	},
 	icon: {
 		color: "#000"
 	}
 }));
 
-const UploadButton = () => {
+const UploadButton = props => {
 	const classes = useStyles();
+	const [name, setName] = React.useState('');
+
+	const handleChange = e => {
+		const files = e.target.files;
+
+		if (files.length) {
+			const file = files[0];
+			if(file && (file.size / Math.pow(1024, 2) < 1)) {
+				setName(file.name)
+        const imgURL =  window.URL.createObjectURL(file);
+				props.onChange(imgURL);
+      }
+		}
+	}
 
 	return (
 		<div>
@@ -42,17 +66,20 @@ const UploadButton = () => {
 				id="outlined-button-file"
 				multiple
 				type="file"
+				onChange={handleChange}
 			/>
 			<label htmlFor="outlined-button-file">
 				<Button 
 					component="span" 
 					classes={{
 						root: classes.uploadButton,
-						label: classes.uploadButtonLabel
+						label: classes.uploadButtonLabel + `  ${name && classes.uploaded}`
 					}} 
 					fullWidth
 				>
-					Movie poster
+					<span className={classes.truncate}>
+						{name || 'Movie poster'}
+					</span>
 					<CloudUploadIcon className={classes.icon} />
 				</Button>
 			</label>

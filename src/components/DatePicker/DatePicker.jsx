@@ -34,19 +34,18 @@ const styles = theme => ({
 });
 
 
-const Calendar = ({ classes, ...rest }) => {
-	const [selectedDate, handleDateChange] = React.useState(null);
-
+const Calendar = ({ classes, onChange, value, ...rest }) => {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
     	<KeyboardDatePicker
         {...rest}
+        autoOk
         className={classes.formControl}
         label="Date of launch"
         format="MM/dd/yyyy"
         inputVariant="filled"
         clearable
-        value={selectedDate}
+        value={value}
         invalidDateMessage="Invalid Date Format - mm/dd/yyyy"
         InputLabelProps={{
           classes: {
@@ -58,14 +57,15 @@ const Calendar = ({ classes, ...rest }) => {
           className: classes.input,
           disableUnderline: true  
         }}
-        onChange={date => handleDateChange(date)}
+        onChange={date => onChange(date)}
       />
     </MuiPickersUtilsProvider>
   )
 }
 
 Calendar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  onChange: PropTypes.func
 };
 
 export default withStyles(styles)(Calendar);
