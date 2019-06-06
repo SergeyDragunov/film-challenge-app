@@ -12,13 +12,20 @@ import Page from '../../components/Page/Page'
 import PageHeader from '../../components/PageHeader/PageHeader'
 
 import moviesActions from '../../actions/movies';
+import contentActions from '../../actions/content';
 
 const styles = {
 };
 
 class Movies extends Component {
 	componentDidMount() {
-		this.props.getAll();
+		const { location, getAllAPIMovies, getAllMyMovies } = this.props;
+
+		if (location.pathname.includes('/my-movies')) {
+			getAllMyMovies();
+		} else {
+			getAllAPIMovies();
+		}
 	}
 
 	render() {
@@ -54,7 +61,8 @@ const mapStateToProps = ({ movies }) => ({
 })
 
 const mapDispatchToProps = {
-	getAll: moviesActions.getAll
+	getAllAPIMovies: moviesActions.getAll,
+	getAllMyMovies: contentActions.getAll
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Movies);

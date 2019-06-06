@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 // Material UI
@@ -16,6 +17,8 @@ import IconButton from '@material-ui/core/IconButton';
 import ClearIcon from '@material-ui/icons/Clear';
 
 import NavLink from '../NavLink/NavLink';
+
+import { openDrawer } from '../../actions/app';
 
 const useStyles = makeStyles(theme => ({
   list: {
@@ -46,17 +49,17 @@ const useStyles = makeStyles(theme => ({
 const navList = [
 	{
 		title: "Profile",
-		href: "",
+		href: "/profile",
 		icon: <PersonIcon />
 	},
 	{
 		title: "My Movies",
-		href: "",
+		href: "/my-movies",
 		icon: <FavoriteIcon />
 	},
 	{
 		title: "My Movies",
-		href: "",
+		href: "/my-movies",
 		icon: <SettingsIcon />
 	},
 ]
@@ -69,7 +72,7 @@ const ListItemLink = props => {
 
   return (
     <li>
-      <ListItem button component={Link} to={to}>
+      <ListItem button component={Link} to={to} onClick={() => props.openDrawer(false)}>
 	      <ListItemIcon className={classes.icon}>{icon}</ListItemIcon>
         <ListItemText primary={primary} />
       </ListItem>
@@ -81,9 +84,10 @@ ListItemLink.propTypes = {
   icon: PropTypes.node.isRequired,
   primary: PropTypes.node.isRequired,
   to: PropTypes.string.isRequired,
+  openDrawer: PropTypes.func.isRequired,
 };
 
-const Nav = () => {
+const Nav = ({ openDrawer }) => {
 	const classes = useStyles();
 	return (
 	  <div
@@ -92,24 +96,41 @@ const Nav = () => {
 	  >
 	    <List>
 	      {navList.map((item, index) => (
-	        <ListItemLink to={item.href} primary={item.title} icon={item.icon} key={index} />
+	        <ListItemLink to={item.href} primary={item.title} icon={item.icon} key={index} openDrawer={openDrawer} />
 	      ))}
 	    </List>
 	  </div>
 	)
 };
 
-const DrawerNav = () => {
+Nav.propTypes = {
+  openDrawer: PropTypes.func.isRequired,
+};
+
+const DrawerNav = ({ open, openDrawer }) => {
 	const classes = useStyles();
 
 	return (
-		<Drawer open={false} classes={{paper: classes.paper}}>
-			<IconButton className={classes.clearButton} aria-label="Close Drawer">
+		<Drawer open={open} classes={{paper: classes.paper}} onClose={() => openDrawer(false)}>
+			<IconButton className={classes.clearButton} aria-label="Close Drawer" onClick={() => openDrawer(false)}>
         <ClearIcon />
       </IconButton>
-			<Nav />
+			<Nav openDrawer={openDrawer} />
 	  </Drawer>
 	)
 }
 
-export default DrawerNav;
+DrawerNav.propTypes = {
+	open: PropTypes.bool.isRequired,
+	openDrawer: PropTypes.func.isRequired
+}
+
+const mapStateToProps = ({ app }) => ({
+	open: app.drawer.open
+})
+
+const mapDispatchToProps = {
+	openDrawer
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DrawerNav);
