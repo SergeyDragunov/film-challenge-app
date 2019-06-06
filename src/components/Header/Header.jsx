@@ -1,7 +1,7 @@
 import React from "react";
 import { Link as RouterLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 // Material UI
 
@@ -19,6 +19,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import profileImg from '../../assets/images/profile.jpg';
 import Logo from '../Logo/Logo';
 import NavLink from '../NavLink/NavLink';
+
+import { openDrawer } from '../../actions/app';
 
 const useStyles = makeStyles(theme => ({
   header: {
@@ -65,7 +67,8 @@ const useStyles = makeStyles(theme => ({
   },
   headerSide: {
     padding: "10px 35px",
-    borderLeft: "1px solid #393A48"
+    borderLeft: "1px solid #393A48",
+    marginLeft: 56
   },
   loginButton: {
     height: "50px",
@@ -176,7 +179,7 @@ const UserHeader = () => {
   )
 }
 
-const Header = ({ user }) => {
+const Header = ({ user, openDrawer }) => {
   const classes = useStyles();
   const { loggedIn } = user.settings;
 
@@ -188,6 +191,7 @@ const Header = ({ user }) => {
           className={classes.menuButton}
           color="inherit"
           aria-label="Menu"
+          onClick={() => openDrawer(true)}
         >
           <MenuIcon />
         </IconButton>
@@ -215,8 +219,17 @@ const Header = ({ user }) => {
   );
 };
 
+Header.propTypes = {
+  user: PropTypes.object.isRequired,
+  openDrawer: PropTypes.func.isRequired
+}
+
 const mapStateToProps = ({ user }) => ({
   user
 });
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = {
+  openDrawer
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
