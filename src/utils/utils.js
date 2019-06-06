@@ -14,3 +14,9 @@ export const parseData = data => data.map(item => ({
 	releaseDate: dateFns.format(dateFns.date(item.release_date), 'MMMM dd, yyyy'),
 	rating: item.vote_average * 10 + "%"
 }));
+
+// Unique ID
+
+export const ID = function() {
+	return Math.random()
+};

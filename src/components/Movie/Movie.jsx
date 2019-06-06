@@ -143,7 +143,8 @@ Movie.propTypes = {
     overview: PropTypes.string,
     releaseDate: PropTypes.string,
     rating: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  menu: PropTypes.bool
 }
 
 export default Movie;

@@ -10,6 +10,7 @@ import Header from '../../components/Header/Header';
 import Drawer from '../../components/Drawer/Drawer';
 import Notification from '../../components/Notification/Notification';
 import Movies from '../Movies/Movies';
+import MyMovies from '../MyMovies/MyMovies';
 
 import LoginModal from '../../components/LoginModal/LoginModal';
 import AddMovieModal from '../../components/AddMovieModal/AddMovieModal';
@@ -48,10 +49,12 @@ class App extends Component {
 				<Container>
 					<Switch location={isModal ? this.previousLocation : location}>
 						<Route path="/" exact component={Movies} />
+						<Route path="/my-movies" component={MyMovies} />
 
 						<Route path="/login" component={LoginModal} />
 						<Route path="/add-movie" component={AddMovieModal} />
 					</Switch>
+					
 					{isModal ? <Route path="/login" component={LoginModal} /> : null}
 					{isModal ? <Route path="/add-movie" component={AddMovieModal} /> : null}
 				</Container>

@@ -1,8 +1,9 @@
 import { contentConstants } from '../constants';
+import { ID } from '../utils/utils';
 
 const mockMovies = [
 	{
-		id: 1,
+		id: ID(),
 		poster: "https://image.tmdb.org/t/p/w500//pU3bnutJU91u3b4IeRPQTOP8jhV.jpg",
 		title: "Bohemian Rhapsody",
 		overview: "When Alita awakens with no memory of who she is in a future world she does not recognize",
@@ -10,7 +11,7 @@ const mockMovies = [
 		rating: "64%"
 	},
 	{
-		id: 2,
+		id: ID(),
 		poster: "https://image.tmdb.org/t/p/w500//wgQ7APnFpf1TuviKHXeEe3KnsTV.jpg",
 		title: "Robin Hood",
 		overview: "When Alita awakens with no memory of who she is in a future world she does not recognize",
@@ -34,6 +35,22 @@ const getAll = () => {
 	}
 };
 
+/* Create Content */
+
+const create = (data) => {
+	const request = data => ({ type: contentConstants.CREATE_REQUEST, data });
+	const success = () => ({ type: contentConstants.CREATE_SUCCESS	});
+
+	return (dispatch) => {
+		dispatch(request(data));
+
+		setTimeout(() => {
+			dispatch(success());
+		}, 1000);
+	}
+};
+
 export default {
 	getAll,
+	create
 }

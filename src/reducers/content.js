@@ -3,6 +3,8 @@ import { contentConstants } from '../constants';
 const initState = {
 	settings: {
 		isFetching: false,
+		isCreating: false,
+		isCreated: false
 	},
 	data: []
 }
@@ -26,6 +28,30 @@ export default (state = initState, action) => {
 					isFetching: false
 				},
 				data: action.data
+			}
+		}
+		case contentConstants.CREATE_REQUEST: {
+			return {
+				...state,
+				settings: {
+					...state.settings,
+					isCreating: true,
+					isCreated: false,
+				},
+				data: [
+					...state.data,
+					action.data
+				]
+			}
+		}
+		case contentConstants.CREATE_SUCCESS: {
+			return {
+				...state,
+				settings: {
+					...state.settings,
+					isCreating: false,
+					isCreated: true
+				}
 			}
 		}
 		default: {
