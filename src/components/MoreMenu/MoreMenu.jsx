@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from 'react-redux'; 
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -13,6 +14,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Popper from "@material-ui/core/Popper";
 import Grow from "@material-ui/core/Grow";
 import Paper from "@material-ui/core/Paper";
+
+import contentActions from '../../actions/content';
 
 const useStyles = makeStyles(theme => ({
 	popper: {
@@ -42,6 +45,11 @@ const MoreMenu = props => {
 
 		setOpen(false);
 	};
+
+	const handleDelete = event => {
+		handleClose(event);
+		props.remove(props.movieId);
+	}
 
 	return (
 		<div>
@@ -80,7 +88,7 @@ const MoreMenu = props => {
 									>
 										Edit
 									</MenuItem>
-									<MenuItem className={classes.menuItem} onClick={handleClose}>
+									<MenuItem className={classes.menuItem} onClick={handleDelete}>
 										Delete
 									</MenuItem>
 								</MenuList>
@@ -95,7 +103,8 @@ const MoreMenu = props => {
 
 MoreMenu.propTypes = {
 	movieId: PropTypes.number.isRequired,
-	classNameButton: PropTypes.string
+	remove: PropTypes.func.isRequired,
+	classNameButton: PropTypes.string,
 };
 
-export default MoreMenu;
+export default connect(null, { remove: contentActions.remove })(MoreMenu);

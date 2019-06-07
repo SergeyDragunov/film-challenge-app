@@ -25,7 +25,7 @@ class MyMovies extends Component {
 
 	render() {
 		const { movies } = this.props;
-
+		console.log(movies);
 		return (
 			<Page>
 				<PageHeader>

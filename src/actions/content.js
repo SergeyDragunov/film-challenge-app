@@ -78,7 +78,23 @@ const update = data => {
 
 		setTimeout(() => {
 			dispatch(setNotification('success', "Movie was succesfully updated"));
-			dispatch(success(mockMovies.map(item => item.id === data.id ? data : item)));
+			dispatch(success(data));
+		}, 1000);
+	}
+};
+
+/* Remove Content */
+
+const remove = id => {
+	const request = () => ({ type: contentConstants.DELETE_REQUEST });
+	const success = id => ({ type: contentConstants.DELETE_SUCCESS, id });
+
+	return (dispatch) => {
+		dispatch(request());
+
+		setTimeout(() => {
+			dispatch(setNotification('error', "Movie was succesfully deleted"));
+			dispatch(success(id));
 		}, 1000);
 	}
 };
@@ -94,5 +110,6 @@ export default {
 	getById,
 	create,
 	update,
+	remove,
 	removeEditData
 }

@@ -75,7 +75,14 @@ export default (state = initState, action) => {
 		case contentConstants.UPDATE_SUCCESS: {
 			return {
 				...state,
-				data: action.data
+				data: state.data.map(item => item.id === action.data.id ? action.data : item)
+			}
+		}
+		case contentConstants.DELETE_SUCCESS: {
+			console.log(state.data.filter(item => item.id !== action.id))
+			return {
+				...state,
+				data: state.data.filter(item => item.id !== action.id)
 			}
 		}
 		default: {
