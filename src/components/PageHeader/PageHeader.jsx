@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
-import SearchInput from "../../components/SearchInput/SearchInput";
+// import SearchInput from "../../components/SearchInput/SearchInput";
 
 const useStyles = makeStyles({
 	pageHeader: {
@@ -29,7 +29,7 @@ const PageHeader = props => {
 			<Typography variant="h4" component="h2" className={classes.pageHeading}>
 				{props.children}
 			</Typography>
-			<SearchInput />
+			{/*<SearchInput />*/}
 		</div>
 	);
 };

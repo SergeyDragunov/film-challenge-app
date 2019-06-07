@@ -16,6 +16,12 @@ import contentActions from '../../actions/content';
 const styles = {
 };
 
+const skeleton = [];
+
+for (let i = 0; i < 2; i++) {
+	skeleton.push({});
+}
+
 class MyMovies extends Component {
 	componentDidMount() {
 		const { getAll } = this.props;
@@ -24,8 +30,8 @@ class MyMovies extends Component {
 	}
 
 	render() {
-		const { movies } = this.props;
-		
+		const movies = this.props.movies.length ? this.props.movies : skeleton;
+
 		return (
 			<Page>
 				<PageHeader>
@@ -33,8 +39,8 @@ class MyMovies extends Component {
 				</PageHeader>
 				<Grid container spacing={4}>
 					{
-						movies.map(movie => 
-							<Grid sm={4} item key={movie.id}>
+						movies.map((movie, index) => 
+							<Grid sm={4} item key={index}>
 								<Movie movie={movie} menu={true} />
 							</Grid>
 						)

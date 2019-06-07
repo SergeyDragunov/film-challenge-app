@@ -16,6 +16,12 @@ import moviesActions from '../../actions/movies';
 const styles = {
 };
 
+const skeleton = [];
+
+for (let i = 0; i < 12; i++) {
+	skeleton.push({});
+}
+
 class Movies extends Component {
 	componentDidMount() {
 		const { getAll } = this.props;
@@ -24,7 +30,7 @@ class Movies extends Component {
 	}
 
 	render() {
-		const { movies } = this.props;
+		const movies = this.props.movies.length ? this.props.movies : skeleton;
 
 		return (
 			<Page>
@@ -33,8 +39,8 @@ class Movies extends Component {
 				</PageHeader>
 				<Grid container spacing={4}>
 					{
-						movies.map(movie => 
-							<Grid sm={4} item key={movie.id}>
+						movies.map((movie, index) => 
+							<Grid sm={4} item key={index}>
 								<Movie movie={movie} />
 							</Grid>
 						)

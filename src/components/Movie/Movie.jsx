@@ -86,50 +86,63 @@ const Movie = ({ movie, menu }) => {
     <Card className={classes.card} data-test="movie">
       <Grid container direction="row" wrap="nowrap">
         <Grid item sm={6}>
-          <CardMedia
-            className={classes.cardMedia}
-            component="img"
-            alt={title + " poster"}
-            image={poster}
-            title={title + " poster"}
-          />
+          {
+            poster ?
+            <CardMedia
+              className={classes.cardMedia}
+              component="img"
+              alt={title + " poster"}
+              image={poster}
+              title={title + " poster"}
+            /> :
+            <div className={classes.cardMedia}></div>
+          }
         </Grid>
         <Grid item sm={6}>
           <CardContent className={classes.cardContent}>
-            {menu && <MoreMenu classNameButton={classes.moreButton} movieId={id} />}
+            {(id && menu) && <MoreMenu classNameButton={classes.moreButton} movieId={id} />}
             <Grid
               container
               alignItems="flex-start"
               justify="space-between"
               wrap="nowrap"
             >
-              <Typography className={classes.title} variant="h5" component="h2">
-                <LinesEllipsis
-                  title={title}
-                  text={title}
-                  maxLine='2'
-                  basedOn='letters'
-                />
-              </Typography>
-              <Typography
-                className={classes.rating}
-                variant="body2"
-                component="span"
-              >
-                {rating}
-              </Typography>
+              {
+                title &&
+                <Typography className={classes.title} variant="h5" component="h2">
+                  <LinesEllipsis
+                    title={title}
+                    text={title}
+                    maxLine='2'
+                    basedOn='letters'
+                  />
+                </Typography>
+              }
+              {
+                rating && 
+                <Typography
+                  className={classes.rating}
+                  variant="body2"
+                  component="span"
+                >
+                  {rating}
+                </Typography>
+              }
             </Grid>
             <Typography className={classes.date} variant="body2" component="div">
               {releaseDate}
             </Typography>
-            <Typography className={classes.text} variant="body2" component="div">
-              <LinesEllipsis
-                title={overview}
-                text={overview}
-                maxLine='4'
-                basedOn='letters'
-              />
-            </Typography>
+            {
+              overview &&
+              <Typography className={classes.text} variant="body2" component="div">
+                <LinesEllipsis
+                  title={overview}
+                  text={overview}
+                  maxLine='4'
+                  basedOn='letters'
+                />
+              </Typography>
+            }
           </CardContent>
         </Grid>
       </Grid>

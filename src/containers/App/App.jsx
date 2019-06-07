@@ -51,9 +51,9 @@ class App extends Component {
 						<Route path="/" exact component={Movies} />
 						<Route path="/my-movies" component={MyMovies} />
 
-						{/*<Route path="/login" component={LoginModal} />
-						<Route path="/add-movie" component={AddMovieModal} />*/}
-						<Redirect from='/add-movie' to='/my-movies'/>
+						<Redirect from='/add-movie' to='/my-movies' />
+						<Redirect from='/login' to='/' />
+						<Route component={Movies} />
 					</Switch>
 					
 					{isModal ? <Route path="/login" component={LoginModal} /> : null}

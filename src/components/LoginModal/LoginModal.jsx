@@ -8,7 +8,6 @@ import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
 
 import Modal from "../Modal/Modal";
 import Logo from "../Logo/Logo";
@@ -40,14 +39,16 @@ const useStyles = makeStyles(theme => ({
 		fontSize: "inherit"
 	},
 	signUplink: {
-		marginLeft: 10
+		marginLeft: 10,
+		fontSize: 'inherit'
 	},
 	recoverLink: {
-		color: "#777"
+		color: "#777",
+		fontSize: 'inherit'
 	}
 }));
 
-const fakeUrl = "javascript:;";
+// const fakeUrl = "javascript:;";
 
 const LoginModal = ({ login, user, history, location }) => {
 	const classes = useStyles();
@@ -108,13 +109,13 @@ const LoginModal = ({ login, user, history, location }) => {
 				<Grid container justify="space-between" className={classes.loginInfo}>
 					<Typography className={classes.loginText}>
 						Don't have account?
-						<Link href={fakeUrl} className={classes.signUplink}>
+						<Typography component="span" className={classes.signUplink} color="primary">
 							Sign up
-						</Link>
+						</Typography>
 					</Typography>
-					<Link href={fakeUrl} className={classes.recoverLink}>
+					<Typography className={classes.recoverLink}>
 						Recover Password
-					</Link>
+					</Typography>
 				</Grid>
 			</form>
 		</Modal>
