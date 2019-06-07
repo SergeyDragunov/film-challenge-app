@@ -83,7 +83,7 @@ const Movie = ({ movie, menu }) => {
   const { id, title, poster, overview, releaseDate, rating } = movie;
 
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} data-test="movie">
       <Grid container direction="row" wrap="nowrap">
         <Grid item sm={6}>
           <CardMedia

@@ -140,7 +140,7 @@ const AddMovieModal = ({
 
 	return (
 		<Modal className={classes.addMovieTitle}>
-			<form action="">
+			<form action="" data-test='add-movie-modal'>
 				<Typography variant="h5" component="h2" className={classes.title}>
 					New movie
 				</Typography>

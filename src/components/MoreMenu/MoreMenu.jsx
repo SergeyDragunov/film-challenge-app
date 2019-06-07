@@ -52,7 +52,7 @@ const MoreMenu = props => {
 	}
 
 	return (
-		<div>
+		<div data-test="more-menu">
 			<IconButton
 				className={props.classNameButton}
 				ref={anchorRef}
