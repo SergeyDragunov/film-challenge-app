@@ -51,12 +51,12 @@ class App extends Component {
 						<Route path="/" exact component={Movies} />
 						<Route path="/my-movies" component={MyMovies} />
 
-						<Route path="/login" component={LoginModal} />
-						<Route path="/add-movie" component={AddMovieModal} />
+						{/*<Route path="/login" component={LoginModal} />
+						<Route path="/add-movie" component={AddMovieModal} />*/}
 					</Switch>
 					
 					{isModal ? <Route path="/login" component={LoginModal} /> : null}
-					{isModal ? <Route path="/add-movie" component={AddMovieModal} /> : null}
+					{isModal ? <Route path={["/add-movie", "/add-movie/:id"]} component={AddMovieModal} /> : null}
 				</Container>
 				<Notification />
 			</div>

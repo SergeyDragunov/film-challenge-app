@@ -6,11 +6,13 @@ const initState = {
 		isCreating: false,
 		isCreated: false
 	},
-	data: []
+	data: [],
+	editData: {}
 }
 
 export default (state = initState, action) => {
 	switch(action.type) {
+		case contentConstants.GET_CONTENT_BY_ID_REQUEST:
 		case contentConstants.GET_CONTENT_REQUEST: {
 			return {
 				...state,
@@ -30,6 +32,16 @@ export default (state = initState, action) => {
 				data: action.data
 			}
 		}
+		case contentConstants.GET_CONTENT_BY_ID_SUCCESS: {
+			return {
+				...state,
+				settings: {
+					...state.settings,
+					isFetching: false
+				},
+				editData: action.data
+			}
+		}
 		case contentConstants.CREATE_REQUEST: {
 			return {
 				...state,
@@ -37,11 +49,7 @@ export default (state = initState, action) => {
 					...state.settings,
 					isCreating: true,
 					isCreated: false,
-				},
-				data: [
-					...state.data,
-					action.data
-				]
+				}
 			}
 		}
 		case contentConstants.CREATE_SUCCESS: {
@@ -51,7 +59,11 @@ export default (state = initState, action) => {
 					...state.settings,
 					isCreating: false,
 					isCreated: true
-				}
+				},
+				data: [
+					...state.data,
+					action.data
+				]
 			}
 		}
 		default: {

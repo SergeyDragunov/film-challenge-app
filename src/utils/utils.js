@@ -18,5 +18,5 @@ export const parseData = data => data.map(item => ({
 // Unique ID
 
 export const ID = function() {
-	return Math.random()
+	return parseInt(Math.random() * 10000)
 };

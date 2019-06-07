@@ -3,6 +3,11 @@ import { appConstants } from '../constants';
 const initState = {
 	drawer: {
 		open: false
+	},
+	notification: {
+		open: false,
+		status: '',
+		message: ''
 	}
 }
 
@@ -13,6 +18,25 @@ export default (state = initState, action) => {
 				...state,
 				drawer: {
 					open: action.open
+				}
+			}
+		}
+		case appConstants.SET_NOTIFICATION: {
+			return {
+				...state,
+				notification: {
+					open: true,
+					status: action.status,
+					message: action.message
+				}
+			}
+		}
+		case appConstants.DISMISS_NOTIFICATION: {
+			return {
+				...state,
+				notification: {
+					...state.notification,
+					open: false	
 				}
 			}
 		}

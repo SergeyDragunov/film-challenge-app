@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import PropTypes from 'prop-types';
 
 // Material UI
 
@@ -8,6 +10,8 @@ import SnackbarContent from '@material-ui/core/SnackbarContent';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import NotificationIcon from '@material-ui/icons/Notifications';
+
+import { dismissNotification } from '../../actions/app';
 
 const useStyles = makeStyles(theme => ({
   close: {
@@ -39,7 +43,7 @@ const NotificationContent = props => {
       message={
       	<span id="message-id" className={classes.message}>
       		<NotificationIcon className={classes.messageIcon} />
-      		Note archived
+      		{message}
       	</span>
       }
       action={
@@ -58,22 +62,17 @@ const NotificationContent = props => {
 	)
 }
 
-const Notification = () => {
-  const [open, setOpen] = React.useState(false);
-
+const Notification = ({ status, open,  message, dismissNotification }) => {
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
-
-    setOpen(false);
+    dismissNotification()
   }
-
-  const status = 'error';
 
 	return (
 		<Snackbar
-      autoHideDuration={4000}
+      autoHideDuration={2000}
       anchorOrigin={{
         vertical: 'top',
         horizontal: 'right',
@@ -83,10 +82,28 @@ const Notification = () => {
     >
     	<NotificationContent
 	    	status={status}
+        message={message}
     		onClose={handleClose}
     	/>
     </Snackbar>
 	)
 }
 
-export default Notification;
+Notification.propTypes = {
+  open: PropTypes.bool.isRequired,
+  status: PropTypes.string.isRequired,
+  message: PropTypes.string.isRequired,
+  dismissNotification: PropTypes.func.isRequired
+}
+
+const mapStateToProps = ({ app }) => ({
+  open: app.notification.open,
+  status: app.notification.status,
+  message: app.notification.message
+});
+
+const mapDispatchToProps = {
+  dismissNotification
+}; 
+
+export default connect(mapStateToProps, mapDispatchToProps)(Notification);

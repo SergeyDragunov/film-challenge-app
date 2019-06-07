@@ -1,5 +1,6 @@
 import { contentConstants } from '../constants';
 import { ID } from '../utils/utils';
+import { setNotification } from './app';
 
 const mockMovies = [
 	{
@@ -18,7 +19,7 @@ const mockMovies = [
 		releaseDate: "February 14, 2018",
 		rating: "64%"
 	},
-]
+];
 
 /* Get All Content */
 
@@ -35,22 +36,39 @@ const getAll = () => {
 	}
 };
 
+/* Get by ID */
+
+const getById = id => {
+	const request = () => ({ type: contentConstants.GET_CONTENT_BY_ID_REQUEST });
+	const success = data => ({ type: contentConstants.GET_CONTENT_BY_ID_SUCCESS, data	});
+
+	return (dispatch) => {
+		dispatch(request());
+
+		setTimeout(() => {
+			dispatch(success(mockMovies.filter(item => item.id === id)[0]));
+		}, 1000);
+	}
+}
+
 /* Create Content */
 
 const create = (data) => {
-	const request = data => ({ type: contentConstants.CREATE_REQUEST, data });
-	const success = () => ({ type: contentConstants.CREATE_SUCCESS	});
+	const request = () => ({ type: contentConstants.CREATE_REQUEST, data });
+	const success = data => ({ type: contentConstants.CREATE_SUCCESS, data });
 
 	return (dispatch) => {
 		dispatch(request(data));
 
 		setTimeout(() => {
-			dispatch(success());
+			dispatch(setNotification('success', "Movie was succesfully add to movie hunt libvrary"));
+			dispatch(success(data));
 		}, 1000);
 	}
 };
 
 export default {
 	getAll,
-	create
+	getById,
+	create,
 }

@@ -78,7 +78,7 @@ const useStyles = makeStyles(theme => ({
 
 const Movie = ({ movie, menu }) => {
   const classes = useStyles();
-  const { title, poster, overview, releaseDate, rating } = movie;
+  const { id, title, poster, overview, releaseDate, rating } = movie;
 
   return (
     <Card className={classes.card}>
@@ -94,7 +94,7 @@ const Movie = ({ movie, menu }) => {
         </Grid>
         <Grid item sm={6}>
           <CardContent className={classes.cardContent}>
-            {menu && <MoreMenu classNameButton={classes.moreButton} />}
+            {menu && <MoreMenu classNameButton={classes.moreButton} movieId={id} />}
             <Grid
               container
               alignItems="flex-start"

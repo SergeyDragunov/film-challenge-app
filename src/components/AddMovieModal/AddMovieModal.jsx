@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-const AddMovieModal = ({ create, history }) => {
+const AddMovieModal = ({ create, history, match }) => {
 	const classes = useStyles();
 	const initState = {
 		title: "",

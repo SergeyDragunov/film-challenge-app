@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 // Material UI
@@ -71,15 +72,17 @@ const MoreMenu = props => {
 						<Paper className={classes.paper} id="menu-list-grow" square>
 							<ClickAwayListener onClickAway={handleClose}>
 								<MenuList>
-									{["Edit", "Delete"].map((item, index) => (
-										<MenuItem
-											className={classes.menuItem}
-											onClick={handleClose}
-											key={index}
-										>
-											{item}
-										</MenuItem>
-									))}
+									<MenuItem
+										className={classes.menuItem}
+										to={{ pathname: `/add-movie/${props.movieId}`, state: { modal: true } }}
+										component={Link}
+										onClick={handleClose}
+									>
+										Edit
+									</MenuItem>
+									<MenuItem className={classes.menuItem} onClick={handleClose}>
+										Delete
+									</MenuItem>
 								</MenuList>
 							</ClickAwayListener>
 						</Paper>
@@ -91,6 +94,7 @@ const MoreMenu = props => {
 };
 
 MoreMenu.propTypes = {
+	movieId: PropTypes.number.isRequired,
 	classNameButton: PropTypes.string
 };
 
