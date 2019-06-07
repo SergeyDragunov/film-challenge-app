@@ -20,6 +20,7 @@ const useStyles = makeStyles(theme => ({
     overflow: "visible",
     position: "relative",
     marginTop: "72px",
+    marginBottom: "40px",
     backgroundColor: theme.palette.secondary.main,
     color: theme.palette.secondary.contrastText,
     boxShadow: "0 2px 20px 0 #292B46"
@@ -31,6 +32,7 @@ const useStyles = makeStyles(theme => ({
     height: "260px",
     width: "173px",
     borderRadius: 2,
+    backgroundColor: theme.palette.secondary.light,
     boxShadow: "0 2px 15px 0 rgba(0,0,0,0.5)"
   },
   cardContent: {

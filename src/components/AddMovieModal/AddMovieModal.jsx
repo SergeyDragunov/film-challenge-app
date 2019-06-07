@@ -14,7 +14,7 @@ import Input from "../Input/Input";
 import DatePicker from "../DatePicker/DatePicker";
 import UploadButton from "../UploadButton/UploadButton";
 
-import { ID, dateFns } from '../../utils/utils';
+import { ID, dateFns } from "../../utils/utils";
 import contentActions from "../../actions/content";
 
 const useStyles = makeStyles(theme => ({
@@ -34,8 +34,18 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-const AddMovieModal = ({ create, history, match }) => {
+const AddMovieModal = ({
+	create,
+	history,
+	match,
+	location,
+	content,
+	getById,
+	removeEditData,
+	update
+}) => {
 	const classes = useStyles();
+	const { editData } = content;
 	const initState = {
 		title: "",
 		casts: "",
@@ -45,17 +55,36 @@ const AddMovieModal = ({ create, history, match }) => {
 	};
 
 	const [newMovie, setValues] = React.useState(initState);
+	const movieId = match.params.id;
 
-	React.useEffect(() => { 
-		if (localStorage.getItem('content')) {
-			setValues(JSON.parse(localStorage.getItem('content')));
+	// Apply Data to Edit
+	React.useEffect(() => {
+		if (Object.keys(editData).length) {
+			let newState = { ...initState };
+			for (let key in newState) {
+				if (editData[key]) newState[key] = editData[key];
+			}
+			setValues(newState);
 		}
-	}, []);
+	}, [editData]);
+
+	React.useEffect(() => {
+		// Check if it is editing or creating movie
+		if (movieId) {
+			getById(movieId);
+		} else if (localStorage.getItem("content")) {
+			setValues(JSON.parse(localStorage.getItem("content")));
+		}
+
+		return () => {
+			removeEditData();
+		};
+	}, [movieId, getById, removeEditData]);
 
 	const handleSetValue = data => {
-		localStorage.setItem('content', JSON.stringify(data));
+		if (!movieId) localStorage.setItem("content", JSON.stringify(data));
 		setValues(data);
-	}
+	};
 
 	const handleChange = e => {
 		handleSetValue({
@@ -80,18 +109,32 @@ const AddMovieModal = ({ create, history, match }) => {
 
 	const handleSubmit = () => {
 		if (newMovie.title && newMovie.releaseDate && newMovie.poster) {
-			create({
-				id: ID(),
-				title: newMovie.title,
-				overview: newMovie.overview,
-				poster: newMovie.poster,
-				rating: parseInt(Math.random() * 100) + '%',
-				releaseDate: dateFns.format(dateFns.date(newMovie.releaseDate), 'MMMM dd, yyyy')
-			});
+			if (!movieId) {
+				create({
+					id: ID(),
+					title: newMovie.title,
+					overview: newMovie.overview,
+					poster: newMovie.poster,
+					rating: parseInt(Math.random() * 100) + "%",
+					releaseDate: dateFns.format(
+						dateFns.date(newMovie.releaseDate),
+						"MMMM dd, yyyy"
+					)
+				});
 
-			history.push('/my-movies');
+				localStorage.removeItem("content");
+			} else {
+				update({
+					...editData,
+					...newMovie,
+					releaseDate: dateFns.format(
+						dateFns.date(newMovie.releaseDate),
+						"MMMM dd, yyyy"
+					)
+				});
+			}
 
-			localStorage.removeItem('content');
+			history.push("/my-movies");
 		}
 	};
 
@@ -123,10 +166,7 @@ const AddMovieModal = ({ create, history, match }) => {
 						/>
 					</Grid>
 					<Grid item sm={6}>
-						<UploadButton
-							name="poster"
-							onChange={handleFileChange}
-						/>
+						<UploadButton name="poster" onChange={handleFileChange} />
 					</Grid>
 				</Grid>
 				<Input
@@ -138,7 +178,11 @@ const AddMovieModal = ({ create, history, match }) => {
 				/>
 				<Grid container spacing={2}>
 					<Grid item sm={6}>
-						<Button onClick={() => history.goBack()} className={classes.button} fullWidth>
+						<Button
+							onClick={() => history.goBack()}
+							className={classes.button}
+							fullWidth
+						>
 							Cancel
 						</Button>
 					</Grid>
@@ -150,7 +194,7 @@ const AddMovieModal = ({ create, history, match }) => {
 							fullWidth
 							onClick={handleSubmit}
 						>
-							Add Movie
+							{movieId ? "Update" : "Add Movie"}
 						</Button>
 					</Grid>
 				</Grid>
@@ -161,7 +205,10 @@ const AddMovieModal = ({ create, history, match }) => {
 
 AddMovieModal.propTypes = {
 	create: PropTypes.func.isRequired,
-	content: PropTypes.object.isRequired
+	getById: PropTypes.func.isRequired,
+	update: PropTypes.func.isRequired,
+	content: PropTypes.object.isRequired,
+	removeEditData: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ content }) => ({
@@ -169,7 +216,10 @@ const mapStateToProps = ({ content }) => ({
 });
 
 const mapDispatchToProps = {
-	create: contentActions.create
+	getById: contentActions.getById,
+	create: contentActions.create,
+	update: contentActions.update,
+	removeEditData: contentActions.removeEditData
 };
 
 export default connect(

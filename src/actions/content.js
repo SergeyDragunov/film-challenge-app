@@ -46,7 +46,7 @@ const getById = id => {
 		dispatch(request());
 
 		setTimeout(() => {
-			dispatch(success(mockMovies.filter(item => item.id === id)[0]));
+			dispatch(success(mockMovies.filter(item => item.id === parseInt(id))[0]));
 		}, 1000);
 	}
 }
@@ -54,21 +54,45 @@ const getById = id => {
 /* Create Content */
 
 const create = (data) => {
-	const request = () => ({ type: contentConstants.CREATE_REQUEST, data });
+	const request = () => ({ type: contentConstants.CREATE_REQUEST });
 	const success = data => ({ type: contentConstants.CREATE_SUCCESS, data });
 
 	return (dispatch) => {
-		dispatch(request(data));
+		dispatch(request());
 
 		setTimeout(() => {
-			dispatch(setNotification('success', "Movie was succesfully add to movie hunt libvrary"));
+			dispatch(setNotification('success', "Movie was succesfully add to movie hunt library"));
 			dispatch(success(data));
 		}, 1000);
 	}
 };
 
+/* Update Content */
+
+const update = data => {
+	const request = () => ({ type: contentConstants.UPDATE_REQUEST });
+	const success = data => ({ type: contentConstants.UPDATE_SUCCESS, data });
+
+	return (dispatch) => {
+		dispatch(request());
+
+		setTimeout(() => {
+			dispatch(setNotification('success', "Movie was succesfully updated"));
+			dispatch(success(mockMovies.map(item => item.id === data.id ? data : item)));
+		}, 1000);
+	}
+};
+
+/* Remove Data to Edit */
+
+const removeEditData = () => ({
+	type: contentConstants.REMOVE_EDIT_DATA
+})
+
 export default {
 	getAll,
 	getById,
 	create,
+	update,
+	removeEditData
 }

@@ -13,7 +13,7 @@ const useStyles = makeStyles({
 		display: "flex",
 		alignItems: "center",
 		justifyContent: "space-between",
-		padding: "20px 0px"
+		padding: "30px 0px 60px"
 	},
 	pageHeading: {
 		color: "#ffffff"

@@ -66,6 +66,18 @@ export default (state = initState, action) => {
 				]
 			}
 		}
+		case contentConstants.REMOVE_EDIT_DATA: {
+			return {
+				...state,
+				editData: {}
+			}
+		}
+		case contentConstants.UPDATE_SUCCESS: {
+			return {
+				...state,
+				data: action.data
+			}
+		}
 		default: {
 			return state;
 		}

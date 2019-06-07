@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Switch, withRouter } from "react-router-dom";
+import { Route, Switch, withRouter, Redirect } from "react-router-dom";
 
 // Material UI
 
@@ -53,10 +53,11 @@ class App extends Component {
 
 						{/*<Route path="/login" component={LoginModal} />
 						<Route path="/add-movie" component={AddMovieModal} />*/}
+						<Redirect from='/add-movie' to='/my-movies'/>
 					</Switch>
 					
 					{isModal ? <Route path="/login" component={LoginModal} /> : null}
-					{isModal ? <Route path={["/add-movie", "/add-movie/:id"]} component={AddMovieModal} /> : null}
+					{isModal ? <Route path={["/add-movie/:id", "/add-movie"]} component={AddMovieModal} /> : null}
 				</Container>
 				<Notification />
 			</div>
