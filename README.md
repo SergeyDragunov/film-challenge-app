@@ -21,6 +21,7 @@ Login: username: test, password: test
 ## Plans for adding (fixing) 🔨
 
 - Responsiveness;
+- PrivateRoutes for private pages;
 - Keyboard a11y issues with upload button in 'AddMovieModal' and 'MoreMenu' in 'Movie'; 
 - Adding new movie from other pages (only works on 'My Movies' page for now);
 - Better emulation for backend and CRUD for movies;
