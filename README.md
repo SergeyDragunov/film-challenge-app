@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and [Material UI](https://material-ui.com/)
 
+Login: username: test, password: test
+
 ### Achieved ✅
 
 - Full implementation of one page

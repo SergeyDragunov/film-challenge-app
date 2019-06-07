@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { createBrowserHistory } from 'history';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from "react-router-dom";
+import { Router } from "react-router-dom";
 
 // Material UI
 
@@ -12,6 +13,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import App from './containers/App/App'
 
 import store from './store';
+
+const history = createBrowserHistory({ basename: process.env.PUBLIC_URL });
 
 const theme = createMuiTheme({
   palette: {
@@ -28,7 +31,7 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
   <Provider store={store}>
-  	<Router>
+  	<Router history={history}>
   		<CssBaseline />
   		<ThemeProvider theme={theme}>
   			<App />
